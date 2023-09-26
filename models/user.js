@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class user extends Model {
     /**
@@ -11,16 +9,51 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      // user.hasMany(models.post);
+      user.hasMany(models.comment);
+      user.belongsToMany(models.post, { through: models.like });
     }
   }
-  user.init({
-    username: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    image: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'user',
-  });
+  user.init(
+    {
+      username: {
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: {
+            message: "Username must not be empty",
+          },
+        },
+      },
+      email: {
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: {
+            message: "Email must not be empty",
+          },
+        },
+      },
+      password: {
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: {
+            message: "Password must not be empty",
+          },
+        },
+      },
+      image: {
+        type: DataTypes.STRING,
+        hooks: {
+          afterCreate: (user, options) => {
+            user.image =
+              "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png";
+          },
+        },
+      },
+    },
+    {
+      sequelize,
+      modelName: "user",
+    }
+  );
   return user;
 };

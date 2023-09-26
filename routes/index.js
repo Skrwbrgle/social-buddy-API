@@ -9,9 +9,11 @@ route.get("/", (req, res) => {
 const userRoutes = require("./user");
 const postRoutes = require("./post");
 const commentRoutes = require("./comment");
+const likeRoutes = require("./like");
 
 route.use("/users", userRoutes);
-route.use("/post", postRoutes);
+route.use("/posts", postRoutes);
 route.use("/comments", commentRoutes);
+route.use("/likes", likeRoutes);
 
 module.exports = route;
