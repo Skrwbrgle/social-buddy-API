@@ -40,17 +40,15 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      image: {
-        type: DataTypes.STRING,
-        hooks: {
-          afterCreate: (user, options) => {
-            user.image =
-              "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png";
-          },
-        },
-      },
+      image: DataTypes.STRING,
     },
     {
+      hooks: {
+        beforeCreate: (user, options) => {
+          user.image =
+            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png";
+        },
+      },
       sequelize,
       modelName: "user",
     }

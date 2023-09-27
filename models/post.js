@@ -16,11 +16,31 @@ module.exports = (sequelize, DataTypes) => {
   }
   post.init(
     {
-      textPost: DataTypes.STRING,
-      userId: DataTypes.INTEGER,
+      textPost: {
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: {
+            message: "Post must not be empty",
+          },
+        },
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        validate: {
+          notEmpty: {
+            message: "Id user must not be empty",
+          },
+        },
+      },
       image: DataTypes.STRING,
     },
     {
+      hooks: {
+        beforeCreate: (post, options) => {
+          post.image =
+            "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw=";
+        },
+      },
       sequelize,
       modelName: "post",
     }

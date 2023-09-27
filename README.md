@@ -31,27 +31,22 @@ npx equelize-cli db:create
 
 ### API documentation
 
-| Method | Route             | Keterangan                                                                             |
-| ------ | ----------------- | -------------------------------------------------------------------------------------- |
-| 🟩GET  | /                 | Menampilkan home page                                                                  |
-| 🟩GET  | /users            | Menampilkan semua users yang ada dalam database                                        |
-| 🟩GET  | /posts            | Menampilkan semua posts yang ada dalam database                                        |
-| 🟩GET  | /comments         | Menampilkan semua comments yang ada dalam database                                     |
-| 🟩GET  | /likes            | Menampilkan semua likes yang ada dalam database                                        |
-| 🟨POST | /users/create     | Menerima data yang dikirim dari halaman `/users/create` untuk melakukan _insertion_    |
-| 🟨POST | /posts/create     | Menerima data yang dikirim dari halaman `/posts/create` untuk melakukan _insertion_    |
-| 🟨POST | /likes/create     | Menerima data yang dikirim dari halaman `/likes/create` untuk melakukan _insertion_    |
-| 🟨POST | /comments/create  | Menerima data yang dikirim dari halaman `/comments/create` untuk melakukan _insertion_ |
-| 🟨POST | /users/update/:id | Menerima data yang dikirim dari halaman `/users/update/:id` untuk melakukan _update_   |
-| 🟩GET  | /users/delete/:id | Melakukan _delete_ data fruit berdasarkan `id` yang dikirimkan                         |
-
-| 👍GET | /users/create | Menampilkan halaman form untuk menambahkan data fruit |
-| 👍GET | /posts/create | Menampilkan halaman form untuk menambahkan data posts |
-| 👍GET | /likes/create | Menampilkan halaman form untuk menambahkan data likes |
-| 👍 GET | /posts/delete/:id | Melakukan _delete_ data posts berdasarkan `id` yang dikirimkan |
-| 👍 GET | /likes/delete/:id | Melakukan _delete_ data likes berdasarkan `id` yang dikirimkan |
-| 👍GET | /fruits/update/:id | Menampilkan halaman form untuk mengubah data fruit dari Id |
-| 👍GET | /posts/update/:id | Menampilkan halaman form untuk mengubah data posts dari Id |
-| 👍POST | /posts/update/:id | Menerima data yang dikirim dari halaman `/brands/update/:id` untuk melakukan _update_ |
-| 👍GET | /likes/update/:id | Menampilkan halaman form untuk mengubah data likes dari Id |
-| 👍POST | /likes/update/:id | Menerima data yang dikirim dari halaman `/likes/update/:id` untuk melakukan _update_ |
+| Method   | Route                | Keterangan                                                                                   |
+| -------- | -------------------- | -------------------------------------------------------------------------------------------- |
+| 🟩GET    | /                    | Menampilkan home page                                                                        |
+| 🟩GET    | /users               | Menampilkan semua users yang ada dalam database                                              |
+| 🟩GET    | /posts               | Menampilkan semua posts yang ada dalam database                                              |
+| 🟩GET    | /posts/:id           | Menampilkan post beserta like yang ada dalam database berdasarkan dari id post               |
+| 🟩GET    | /comments            | Menampilkan semua comments yang ada dalam database                                           |
+| 🟩GET    | /likes               | Menampilkan semua likes yang ada dalam database                                              |
+| 🟨POST   | /users/create        | Menerima data yang dikirim dari halaman `/users/create` untuk melakukan _insertion_          |
+| 🟨POST   | /posts/create        | Menerima data yang dikirim dari halaman `/posts/create` untuk melakukan _insertion_          |
+| 🟨POST   | /comments/create     | Menerima data yang dikirim dari halaman `/comments/create` untuk melakukan _insertion_       |
+| 🟨POST   | /likes/create        | Menerima data yang dikirim dari halaman `/likes/create` untuk melakukan _insertion_          |
+| 🟥DELETE | /users/delete/:id    | Melakukan _delete_ data user berdasarkan `id` yang dikirimkan                                |
+| 🟥DELETE | /posts/delete/:id    | Melakukan _delete_ data post berdasarkan `id` yang dikirimkan                                |
+| 🟥DELETE | /comments/delete/:id | Melakukan _delete_ data comment berdasarkan `id` yang dikirimkan                             |
+| 🟥DELETE | /likes/delete/       | Melakukan _delete_ data like yang dikirim dari halaman `/likes/delete` yang dikirimkan       |
+| 🟦PUT    | /users/update/:id    | Menerima data yang dikirim dari halaman `/users/update/:id` untuk melakukan _update_ user    |
+| 🟦PUT    | /posts/update/:id    | Menerima data yang dikirim dari halaman `/posts/update/:id` untuk melakukan _update_ post    |
+| 🟦PUT    | /comments/update/:id | Menerima data yang dikirim dari halaman `/comments/update/:id` untuk melakukan _update_ post |

@@ -4,8 +4,10 @@ const { PostController } = require("../controllers");
 postRoute.get("/", PostController.getPosts);
 // postRoute.get("/add", PostController.createPage);
 postRoute.post("/create", PostController.create);
-// postRoute.get("/delete/:id", PostController.delete);
+postRoute.delete("/delete/:id", PostController.delete);
 // postRoute.get("/update/:id", PostController.editPage);
-// postRoute.post("/update/:id", PostController.update);
+postRoute.put("/update/:id", PostController.update);
+
+postRoute.get("/:id", PostController.getLikesPost);
 
 module.exports = postRoute;

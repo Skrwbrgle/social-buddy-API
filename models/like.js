@@ -15,8 +15,22 @@ module.exports = (sequelize, DataTypes) => {
   }
   like.init(
     {
-      userId: DataTypes.INTEGER,
-      postId: DataTypes.INTEGER,
+      userId: {
+        type: DataTypes.INTEGER,
+        validate: {
+          notEmpty: {
+            message: "Username must not be empty",
+          },
+        },
+      },
+      postId: {
+        type: DataTypes.INTEGER,
+        validate: {
+          notEmpty: {
+            message: "Username must not be empty",
+          },
+        },
+      },
       dateLike: DataTypes.DATE,
     },
     {

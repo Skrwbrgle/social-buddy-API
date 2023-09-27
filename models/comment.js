@@ -15,9 +15,30 @@ module.exports = (sequelize, DataTypes) => {
   }
   comment.init(
     {
-      textComment: DataTypes.STRING,
-      postId: DataTypes.INTEGER,
-      userId: DataTypes.INTEGER,
+      textComment: {
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: {
+            message: "Comment must not be empty",
+          },
+        },
+      },
+      postId: {
+        type: DataTypes.INTEGER,
+        validate: {
+          notEmpty: {
+            message: "Id post must not be empty",
+          },
+        },
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        validate: {
+          notEmpty: {
+            message: "Id user must not be empty",
+          },
+        },
+      },
       image: DataTypes.STRING,
     },
     {

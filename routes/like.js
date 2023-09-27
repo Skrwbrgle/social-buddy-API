@@ -2,10 +2,11 @@ const likeRoute = require("express").Router();
 const { LikeController } = require("../controllers");
 
 likeRoute.get("/", LikeController.getLikes);
-// likeRoute.get("/add", FollowerController.createPage);
+// likeRoute.get("/add", LikeController.createPage);
 likeRoute.post("/create", LikeController.create);
-// likeRoute.get("/delete/:id", FollowerController.delete);
-// likeRoute.get("/update/:id", FollowerController.editPage);
-// likeRoute.post("/update/:id", FollowerController.update);
+likeRoute.get("/delete", LikeController.delete);
+// likeRoute.get("/update/:id", LikeController.editPage);
+
+// likeRoute.get("/delete/:id/post", LikeController.delete);
 
 module.exports = likeRoute;
