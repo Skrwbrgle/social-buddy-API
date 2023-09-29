@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // post.belongsTo(models.user);
+      post.belongsTo(models.user);
       post.hasMany(models.comment);
       post.belongsToMany(models.user, { through: models.like });
     }
@@ -35,12 +35,12 @@ module.exports = (sequelize, DataTypes) => {
       image: DataTypes.STRING,
     },
     {
-      hooks: {
-        beforeCreate: (post, options) => {
-          post.image =
-            "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw=";
-        },
-      },
+      // hooks: {
+      //   beforeCreate: (post, options) => {
+      //     post.image =
+      //       "https://media.istockphoto.com/id/1452662817/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=bGI_FngX0iexE3EBANPw9nbXkrJJA4-dcEJhCrP8qMw=";
+      //   },
+      // },
       sequelize,
       modelName: "post",
     }

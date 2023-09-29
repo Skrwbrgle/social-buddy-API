@@ -4,7 +4,13 @@ class LikeController {
   static async getLikes(req, res) {
     try {
       const result = await like.findAll({
-        include: [user, post],
+        include: [
+          user,
+          {
+            model: post,
+            attribute: ["userId"],
+          },
+        ],
         order: [["id", "asc"]],
       });
 

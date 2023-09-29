@@ -1,18 +1,105 @@
+const { text } = require("express");
 const { post, comment, like, user } = require("../models");
 class PostController {
   static async getPosts(req, res) {
     try {
-      const result = await post.findAll(
-        // ({
-        //   include: { all: true, nested: true },
-        // });
-        {
-          include: [user, comment],
-          order: [["id", "asc"]],
-        }
-      );
+      let result = await post.findAll({
+        include: [
+          {
+            model: user,
+            attributes: ["id", "username", "image"],
+          },
+          comment,
+        ],
+        order: [["id", "asc"]],
+      });
 
-      res.json(result);
+      let resultLike = await like.findAll();
+
+      let posts = result.map((el) => {
+        const postData = el.dataValues;
+        const userData = postData.user;
+        const commentData = postData.comment;
+        const likesData = resultLike.filter(({ dataValues: like }) => {
+          return postData.id == like.postId;
+        });
+
+        return {
+          ...postData,
+          user: userData,
+          likes: likesData,
+        };
+      });
+
+      let users = await user.findAll();
+      const id = +req.query.id;
+      let oneUser = await user.findByPk(id);
+
+      // console.log(oneUser);
+      // res.json({ posts, users, user: oneUser });
+      res.render("home.ejs", { posts, users, user: oneUser });
+    } catch (err) {
+      console.error(err);
+      res.json(err);
+    }
+  }
+
+  static async like(req, res) {
+    try {
+      const { id, post } = req.query;
+
+      let likesData = await like.findOne({
+        where: {
+          userId: +id,
+          postId: +post,
+        },
+      });
+
+      if (!likesData) {
+        let resultLike = await like.create({
+          userId: +id,
+          postId: +post,
+          dateLike: Date.now(),
+        });
+      } else {
+        let resultLike = await like.destroy({
+          where: { userId: +id, postId: +post },
+        });
+      }
+
+      // res.json(likesData);
+      res.redirect(`/posts?id=${id}`);
+    } catch (err) {
+      res.json(err);
+    }
+  }
+
+  static async createPost(req, res) {
+    try {
+      const id = +req.query.id;
+      let users = await user.findAll();
+      let oneUser = await user.findByPk(id);
+
+      res.render("createPost.ejs", { users, user: oneUser });
+    } catch (err) {
+      res.json(err);
+    }
+  }
+
+  static async updatePost(req, res) {
+    try {
+      const { id, postId } = req.query;
+      let users = await user.findAll();
+      let oneUser = await user.findByPk(id);
+      let onePost = await post.findOne({
+        where: {
+          id: +postId,
+          userId: +id,
+        },
+      });
+
+      // res.json(onePost);
+      res.render("updatePost.ejs", { post: onePost, users, user: oneUser });
     } catch (err) {
       res.json(err);
     }
@@ -36,6 +123,7 @@ class PostController {
       let postLikes = { ...resultLike[0].post.dataValues, likes: usersLike };
 
       // console.log(postLikes);
+      // res.render("home.ejs", { postLikes });
       res.json(postLikes);
     } catch (err) {
       res.json(err);
@@ -44,15 +132,18 @@ class PostController {
 
   static async create(req, res) {
     try {
-      const { textPost, userId, likeId } = req.body;
+      const id = +req.query.id;
+      const { textPost, image } = req.body;
+      const imageUrl = image === "" ? null : image;
 
-      let resultPost = await post.create({
+      let addPost = await post.create({
         textPost,
-        userId,
-        likeId,
+        image: imageUrl,
+        userId: id,
       });
 
-      res.json(resultPost);
+      // res.json(addPost);
+      res.redirect(`/posts?id=${id}`);
     } catch (err) {
       res.json(err);
     }
@@ -60,18 +151,21 @@ class PostController {
 
   static async update(req, res) {
     try {
-      const id = +req.params.id;
+      const id = +req.query.id;
+      console.log(id);
+      console.log(`DFSDJHFBDVBV`);
       const { textPost, image } = req.body;
+      const imageUrl = image === "" ? null : image;
+
       let resultPost = await post.update(
         {
           textPost,
-          image,
+          image: imageUrl,
         },
-        { where: { id } }
+        { where: { userId: id } }
       );
-
       resultPost
-        ? res.json({ message: `Successfully updatees!` })
+        ? res.redirect(`/posts?id=${id}`) // res.json({ message: `Successfully updatees!` })
         : res.json({ message: `Post with ${id} can not update!` });
     } catch (err) {
       res.json(err);
@@ -80,13 +174,18 @@ class PostController {
 
   static async delete(req, res) {
     try {
-      const id = +req.params.id;
-      let resultPost = await post.destroy({ where: { id } });
-      let resultComment = await comment.destroy({ where: { postId: id } });
-      let resultLike = await like.destroy({ where: { postId: id } });
+      const { id, postId } = req.query;
+      let resultPost = await post.destroy({
+        where: {
+          id: +postId,
+          userId: +id,
+        },
+      });
+      let resultComment = await comment.destroy({ where: { postId: +postId } });
+      let resultLike = await like.destroy({ where: { postId: +postId } });
 
       resultPost === 1
-        ? res.json({ message: `Successfully deleted post with id ${id}` })
+        ? res.redirect(`/posts?id=${id}`) //res.json({ message: `Successfully deleted post with id ${id}` })
         : res.json({ message: `Can't found id ${id}` });
     } catch (err) {
       res.json(err);

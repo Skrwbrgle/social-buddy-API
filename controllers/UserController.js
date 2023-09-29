@@ -8,9 +8,14 @@ class UserController {
       });
 
       res.json(result);
+      // res.render("header.ejs", { users: result });
     } catch (err) {
       res.json(err);
     }
+  }
+
+  static signUp(req, res) {
+    res.render("signUp.ejs");
   }
 
   static async create(req, res) {
@@ -23,7 +28,8 @@ class UserController {
         password,
       });
 
-      res.json(resultUser);
+      // res.json(resultUser);
+      res.render("home.ejs");
     } catch (err) {
       res.json(err);
     }
@@ -42,7 +48,6 @@ class UserController {
         },
         { where: { id } }
       );
-
       resultUser
         ? res.json({ message: `Successfully updatees!` })
         : res.json({ message: `User with ${id} can not update!` });

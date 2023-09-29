@@ -2,12 +2,12 @@ const postRoute = require("express").Router();
 const { PostController } = require("../controllers");
 
 postRoute.get("/", PostController.getPosts);
-// postRoute.get("/add", PostController.createPage);
+postRoute.get("/create", PostController.createPost);
 postRoute.post("/create", PostController.create);
-postRoute.delete("/delete/:id", PostController.delete);
-// postRoute.get("/update/:id", PostController.editPage);
-postRoute.put("/update/:id", PostController.update);
-
-postRoute.get("/:id", PostController.getLikesPost);
+postRoute.get("/like", PostController.like);
+postRoute.get("/delete", PostController.delete);
+postRoute.get("/update", PostController.updatePost);
+postRoute.post("/update", PostController.update);
+// postRoute.get("/:id", PostController.getLikesPost);
 
 module.exports = postRoute;
