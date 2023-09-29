@@ -121,3 +121,13 @@ footer {
   /* fill: red; Ubah warna mengisi ikon sesuai keinginan Anda */
   color: #c33636;
 }
+
+.selectedUsername {
+  position: absolute;
+  top: 10px; /* Sesuaikan dengan jarak dari atas */
+  right: 20px; /* Sesuaikan dengan jarak dari kanan */
+  color: #ffffff; /* Warna teks */
+  font-weight: bold; /* Ketebalan teks */
+  text-decoration: none; /* Menghapus garis bawah pada tautan */
+  font-size: 16px; /* Ukuran teks */
+}

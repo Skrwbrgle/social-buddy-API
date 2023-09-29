@@ -134,11 +134,11 @@ footer {
 
 .btn-floating {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 50px;
+  right: 50px;
   z-index: 1000;
-  width: 60px; /* Lebar tombol */
-  height: 60px; /* Tinggi tombol */
+  width: 80px; /* Lebar tombol */
+  height: 80px; /* Tinggi tombol */
   border-radius: 50%; /* Membuat tombol berbentuk lingkaran */
   display: flex;
   align-items: center;
@@ -153,7 +153,7 @@ footer {
 
 /* Gaya tambahan saat tombol dihover (jika diperlukan) */
 .btn-floating:hover {
-  background-color: #007bff; /* Warna latar belakang tombol saat hover */
+  background-color: #1861af; /* Warna latar belakang tombol saat hover */
   /* Atau efek hover lainnya sesuai keinginan Anda */
 }
 
@@ -176,4 +176,30 @@ footer {
   right: 25px; /* Atur jarak dari kanan sesuai dengan kebutuhan Anda */
   z-index: 999;
   display: none;
+}
+
+.selectedUsername {
+  position: absolute;
+  top: 10px; /* Sesuaikan dengan jarak dari atas */
+  right: 20px; /* Sesuaikan dengan jarak dari kanan */
+  color: #ffffff; /* Warna teks */
+  font-weight: bold; /* Ketebalan teks */
+  text-decoration: none; /* Menghapus garis bawah pada tautan */
+  font-size: 16px; /* Ukuran teks */
+}
+
+.navbar .navbar-nav .nav-item:last-child .nav-link {
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.btn-edit-profile {
+  position: absolute;
+  background-color: transparent;
+  top: 10px; /* Atur jarak dari atas */
+  right: 10px; /* Atur jarak dari kanan */
+  z-index: 1; /* Menempatkan tombol di depan gambar profil */
+  border: none;
 }

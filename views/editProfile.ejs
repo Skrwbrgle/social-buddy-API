@@ -34,9 +34,11 @@
               <li class="nav-item">
                 <a class="nav-link" href="/">Home</a>
               </li>
-              <li class="nav-item">
-                <a href="/users/signin" class="nav-link">Sign In</a>
-              </li>
+              <span class="nav-item ml-auto">
+                <a class="nav-link text-white" aria-expanded="false"
+                  ><%= user.username %></a
+                >
+              </span>
             </ul>
           </div>
         </div>
@@ -44,10 +46,20 @@
     </header>
 
     <div class="container mt-5">
-      <h1 class="text-center">Sign Up</h1>
+      <h1 class="text-center">Profile Data</h1>
       <div class="row justify-content-center">
         <div class="col-md-6">
-          <form action="/users/signup" method="post">
+          <form action="/users/profile/update?id=<%= user.id %>" method="post">
+            <div class="mb-3">
+              <label for="username" class="form-label">Foto:</label>
+              <input
+                type="url"
+                class="form-control"
+                id="image"
+                name="image"
+                value="<%= user.image %>"
+              />
+            </div>
             <div class="mb-3">
               <label for="username" class="form-label">Username:</label>
               <input
@@ -56,6 +68,7 @@
                 id="username"
                 name="username"
                 required
+                value="<%= user.username %>"
               />
             </div>
             <div class="mb-3">
@@ -66,6 +79,7 @@
                 id="email"
                 name="email"
                 required
+                value="<%= user.email %>"
               />
             </div>
             <div class="mb-3">
@@ -76,10 +90,11 @@
                 id="password"
                 name="password"
                 required
+                value="<%= user.password %>"
               />
             </div>
             <div class="text-center">
-              <button type="submit" class="btn btn-primary">Sign Up</button>
+              <button type="submit" class="btn btn-primary">Submit</button>
             </div>
           </form>
         </div>

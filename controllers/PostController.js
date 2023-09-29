@@ -1,4 +1,4 @@
-const { text } = require("express");
+// const { text } = require("express");
 const { post, comment, like, user } = require("../models");
 class PostController {
   static async getPosts(req, res) {
@@ -151,9 +151,7 @@ class PostController {
 
   static async update(req, res) {
     try {
-      const id = +req.query.id;
-      console.log(id);
-      console.log(`DFSDJHFBDVBV`);
+      const { id, postId } = req.query;
       const { textPost, image } = req.body;
       const imageUrl = image === "" ? null : image;
 
@@ -162,10 +160,16 @@ class PostController {
           textPost,
           image: imageUrl,
         },
-        { where: { userId: id } }
+        {
+          where: {
+            userId: +id,
+            id: +postId,
+          },
+        }
       );
+
       resultPost
-        ? res.redirect(`/posts?id=${id}`) // res.json({ message: `Successfully updatees!` })
+        ? res.redirect(`/users/profile?id=${+id}`) // res.json({ message: `Successfully updatees!` })
         : res.json({ message: `Post with ${id} can not update!` });
     } catch (err) {
       res.json(err);
