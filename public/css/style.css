@@ -228,6 +228,9 @@ footer {
   flex-direction: row; /* Mengatur ikon dan teks komentar di sebelah kanan */
   align-items: flex-start;
   margin-bottom: 15px;
+  .no-button {
+    display: none;
+  }
 }
 
 .comment.user {
@@ -302,19 +305,15 @@ footer {
   ); /* Rotasi ikon sebesar 45 derajat saat tombol dihover */
 }
 
-.delete-comment-button {
+.delete-button {
   margin-block: auto;
   top: 0;
   right: -16px; /* Sesuaikan jarak tombol dari bubble chat */
   opacity: 0; /* Tombol awalnya tidak terlihat */
-  transition: opacity 0.6s ease; /* Efek transisi muncul */
+  transition: opacity 0.9s ease; /* Efek transisi muncul */
   display: block;
 }
 
-.delete-comment-button .hide {
-  display: none;
-}
-
-.comment:hover .delete-comment-button {
+.comment:hover .delete-button {
   opacity: 1; /* Tombol akan muncul saat hover */
 }

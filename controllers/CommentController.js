@@ -80,11 +80,16 @@ class CommentController {
 
   static async delete(req, res) {
     try {
-      const id = +req.params.id;
-      let resultComment = await comment.destroy({ where: { id } });
+      const { id, postId, commentId } = req.query;
+      let resultComment = await comment.destroy({
+        where: {
+          id: +commentId,
+          userId: +id,
+        },
+      });
 
       resultComment === 1
-        ? res.json({ message: `Successfully deleted comment with id ${id}` })
+        ? res.redirect(`/posts/comments?id=${+id}&postId=${+postId}`) //res.json({ message: `Successfully deleted comment with id ${id}` })
         : res.json({ message: `Can't found id ${id}` });
     } catch (err) {
       res.json(err);
