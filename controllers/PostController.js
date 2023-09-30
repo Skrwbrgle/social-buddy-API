@@ -1,5 +1,6 @@
 // const { text } = require("express");
 const { post, comment, like, user } = require("../models");
+const { use } = require("../routes");
 class PostController {
   static async getPosts(req, res) {
     try {
@@ -46,29 +47,59 @@ class PostController {
 
   static async like(req, res) {
     try {
-      const { id, post } = req.query;
+      const { id, postId } = req.query;
 
       let likesData = await like.findOne({
         where: {
           userId: +id,
-          postId: +post,
+          postId: +postId,
         },
       });
 
       if (!likesData) {
         let resultLike = await like.create({
           userId: +id,
-          postId: +post,
+          postId: +postId,
           dateLike: Date.now(),
         });
       } else {
         let resultLike = await like.destroy({
-          where: { userId: +id, postId: +post },
+          where: { userId: +id, postId: +postId },
         });
       }
 
       // res.json(likesData);
       res.redirect(`/posts?id=${id}`);
+    } catch (err) {
+      res.json(err);
+    }
+  }
+
+  static async likeInPost(req, res) {
+    try {
+      const { id, postId } = req.query;
+
+      let likesData = await like.findOne({
+        where: {
+          userId: +id,
+          postId: +postId,
+        },
+      });
+
+      if (!likesData) {
+        let resultLike = await like.create({
+          userId: +id,
+          postId: +postId,
+          dateLike: Date.now(),
+        });
+      } else {
+        let resultLike = await like.destroy({
+          where: { userId: +id, postId: +postId },
+        });
+      }
+
+      // res.json(likesData);
+      res.redirect(`/posts/comments?id=${+id}&postId=${+postId}`);
     } catch (err) {
       res.json(err);
     }
@@ -189,8 +220,55 @@ class PostController {
       let resultLike = await like.destroy({ where: { postId: +postId } });
 
       resultPost === 1
-        ? res.redirect(`/posts?id=${id}`) //res.json({ message: `Successfully deleted post with id ${id}` })
+        ? res.redirect(`/posts?id=${+id}`) //res.json({ message: `Successfully deleted post with id ${id}` })
         : res.json({ message: `Can't found id ${id}` });
+    } catch (err) {
+      res.json(err);
+    }
+  }
+
+  static async commentPage(req, res) {
+    try {
+      const { id, postId } = req.query;
+
+      let resultLike = await like.findAll({
+        where: {
+          postId: +postId,
+        },
+      });
+
+      let userLikes = resultLike.map((el) => {
+        return el.dataValues;
+      });
+
+      let onePost = await post.findOne({
+        where: { id: +postId },
+        include: [
+          {
+            model: user,
+            attributes: ["id", "username", "image"],
+          },
+          {
+            model: comment,
+            include: [
+              {
+                model: user,
+                attributes: ["username", "image"],
+              },
+            ],
+          },
+        ],
+      });
+      let users = await user.findAll();
+      let oneUser = await user.findByPk(id);
+
+      // res.json(onePost);
+      res.render("comments.ejs", {
+        post: onePost,
+        users,
+        user: oneUser,
+        likes: userLikes,
+      });
     } catch (err) {
       res.json(err);
     }

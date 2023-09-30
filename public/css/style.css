@@ -108,6 +108,15 @@ footer {
   color: #262626; /* Warna ikon seperti di Instagram */
 }
 
+.btn-like-comment {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 2;
+  font-size: 1.5rem; /* Ukuran ikon */
+  color: #262626; /* Warna ikon seperti di Instagram */
+}
+
 /* Tombol Comment */
 .btn-comment {
   background-color: transparent;
@@ -117,7 +126,13 @@ footer {
   font-size: 1.5rem; /* Ukuran ikon */
   color: #262626; /* Warna ikon seperti di Instagram */
 }
+
 .btn-like.liked {
+  /* fill: red; Ubah warna mengisi ikon sesuai keinginan Anda */
+  color: #c33636;
+}
+
+.btn-like-comment.liked {
   /* fill: red; Ubah warna mengisi ikon sesuai keinginan Anda */
   color: #c33636;
 }
@@ -147,7 +162,7 @@ footer {
 }
 
 .btn-floating i {
-  font-size: 24px; /* Ukuran ikon dalam tombol */
+  font-size: 26px; /* Ukuran ikon dalam tombol */
   color: #fff; /* Warna ikon */
 }
 
@@ -202,4 +217,104 @@ footer {
   right: 10px; /* Atur jarak dari kanan */
   z-index: 1; /* Menempatkan tombol di depan gambar profil */
   border: none;
+}
+
+.comment-section {
+  margin-top: 20px;
+}
+
+.comment {
+  display: flex;
+  flex-direction: row; /* Mengatur ikon dan teks komentar di sebelah kanan */
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.comment.user {
+  align-items: flex-end;
+  flex-direction: row-reverse;
+  .comment-text {
+    background-color: #333;
+  }
+}
+
+.commenter-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  margin-inline: auto; /* Menggeser ikon profil ke kiri */
+  border-radius: 50%;
+}
+
+.commenter-username {
+  font-weight: bold;
+  margin-inline: auto; /* Menggeser ikon profil ke kiri */
+}
+
+.comment-text {
+  margin-block: auto;
+  background-color: #3677bc; /* Warna bubble chat */
+  color: #fff; /* Warna teks di dalam bubble chat */
+  border-radius: 15px; /* Bentuk bubble chat */
+  padding: 10px; /* Ruang di dalam bubble chat */
+  margin-inline: 20px;
+}
+
+.btn-comment {
+  margin-left: 10px;
+}
+
+.user-display {
+  display: flex;
+  flex-direction: column; /* Mengatur ikon dan teks komentar di sebelah kanan */
+  align-items: flex-start;
+}
+
+.comment-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end; /* Mengatur tampilan komentar dan tombol di bagian bawah */
+  margin-top: 15px;
+}
+
+.comment-input {
+  flex: 1; /* Mengambil sebagian besar lebar, sehingga teks komentar akan mengisi sisanya */
+  margin-right: 10px; /* Mengatur jarak antara kolom teks komentar dan tombol */
+}
+
+/* Styling untuk tombol komentar */
+.btn-comment-send {
+  margin-block: auto;
+  min-width: 60px; /* Mengatur lebar minimum tombol */
+  min-height: 60px; /* Mengatur lebar minimum tombol */
+  border-radius: 50%; /* Membuat tombol berbentuk lingkaran */
+  background-color: #1877f2;
+  border: none;
+}
+
+.rotate-icon {
+  transition: transform 0.3s; /* Animasi perubahan rotasi */
+}
+
+.rotate-icon:hover {
+  transform: rotate(
+    45deg
+  ); /* Rotasi ikon sebesar 45 derajat saat tombol dihover */
+}
+
+.delete-comment-button {
+  margin-block: auto;
+  top: 0;
+  right: -16px; /* Sesuaikan jarak tombol dari bubble chat */
+  opacity: 0; /* Tombol awalnya tidak terlihat */
+  transition: opacity 0.6s ease; /* Efek transisi muncul */
+  display: block;
+}
+
+.delete-comment-button .hide {
+  display: none;
+}
+
+.comment:hover .delete-comment-button {
+  opacity: 1; /* Tombol akan muncul saat hover */
 }

@@ -10,6 +10,7 @@ app.use(express.static(__dirname + "/public"));
 app.use("/users/profile", express.static(__dirname + "/public"));
 app.use("/users/signup", express.static(__dirname + "/public"));
 app.use("/users/signin", express.static(__dirname + "/public"));
+app.use("/posts/comments", express.static(__dirname + "/public"));
 
 const routes = require("./routes");
 app.use(routes);

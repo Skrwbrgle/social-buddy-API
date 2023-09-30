@@ -2,12 +2,31 @@ const { comment, user, post } = require("../models");
 class CommentController {
   static async getComments(req, res) {
     try {
-      const result = await comment.findAll({
-        include: [post, user],
-        order: [["id", "asc"]],
+      const { id, postId } = req.query;
+
+      const resultPost = await post.findOne({
+        where: {
+          id: +postId,
+        },
+        include: [
+          {
+            model: comment,
+            where: {
+              postId: +postId,
+            },
+          },
+        ],
+        order: [["id", "desc"]],
       });
 
-      res.json(result);
+      const idUser = +resultPost.userId;
+      const userPost = await user.findOne({
+        where: { id: idUser },
+      });
+
+      // console.log(comments);
+      res.json(resultPost);
+      // res.render("comments.ejs", { post: result });
     } catch (err) {
       res.json(err);
     }
@@ -23,9 +42,19 @@ class CommentController {
         userId,
       });
 
-      res.json(resultComment);
+      // res.json(resultComment);
+      res.redirect(`/posts/comments?id=${+userId}&postId=${+postId}`);
     } catch (err) {
-      res.json(err);
+      if (err.name === "SequelizeValidationError") {
+        const errorMessage = err.errors[0].message;
+
+        if (errorMessage === "Validation notEmpty on textComment failed") {
+          return res.redirect("back");
+        }
+      } else {
+        console.error(err);
+        res.status(500).json({ error: "Internal server error" });
+      }
     }
   }
 

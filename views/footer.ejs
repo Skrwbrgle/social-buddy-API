@@ -27,7 +27,7 @@
       const postId = likeButton.getAttribute('data-post-id');
 
       // Buat URL tujuan berdasarkan ID posting
-      const url = `posts/like?id=${userId}&post=${postId}`;
+      const url = `posts/like?id=${userId}&postId=${postId}`;
 
       if (likeButton.classList.contains('liked')) {
         // Jika sudah, hapus class "liked" untuk membatalkan "like"
@@ -80,6 +80,18 @@
       editOptions.forEach(option => {
           option.style.display = 'none';
       });
+  });
+
+  // Mendapatkan elemen textarea
+  var textarea = document.getElementById("comment-textarea");
+
+  // Menambahkan event listener untuk menangkap keypress
+  textarea.addEventListener("keypress", function (event) {
+    // Mengecek apakah tombol yang ditekan adalah Enter (kode 13)
+    if (event.keyCode === 13 && !event.shiftKey) {
+      event.preventDefault(); // Mencegah form submit secara default
+      document.querySelector(".comment-form").submit(); // Mengirim form komentar
+    }
   });
 </script>
 </body>
