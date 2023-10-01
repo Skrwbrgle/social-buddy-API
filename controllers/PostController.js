@@ -200,7 +200,7 @@ class PostController {
       );
 
       resultPost
-        ? res.redirect(`/users/profile?id=${+id}`) // res.json({ message: `Successfully updatees!` })
+        ? res.redirect(`/posts?id=${+id}`) // res.json({ message: `Successfully updatees!` })
         : res.json({ message: `Post with ${id} can not update!` });
     } catch (err) {
       res.json(err);

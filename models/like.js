@@ -31,7 +31,6 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      dateLike: DataTypes.DATE,
     },
     {
       sequelize,

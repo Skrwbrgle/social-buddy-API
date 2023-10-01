@@ -43,25 +43,50 @@
 
   // Fungsi untuk menampilkan/menyembunyikan opsi Edit dan Hapus
   function toggleEditOptions(event) {
-      event.stopPropagation(); // Mencegah "event" dari menyebar ke elemen lain
-      const card = event.target.closest('.card');
-      const editOptions = card.querySelector('.card-edit');
-      editOptions.style.display = editOptions.style.display === 'block' ? 'none' : 'block';
+    event.stopPropagation(); // Mencegah "event" dari menyebar ke elemen lain
+    const card = event.target.closest('.card');
+    const editOptions = card.querySelector('.card-edit');
+    editOptions.style.display = editOptions.style.display === 'block' ? 'none' : 'block';
   }
-
-  // Fungsi untuk konfirmasi penghapusan
-  function confirmDelete(event) {
+  
+  // Fungsi untuk konfirmasi penghapusan posting
+  const btnDelete = document.querySelectorAll('.btn-delete');
+  btnDelete.forEach(function(btn) {
+    btn.addEventListener('click', function confirmDelete(event) {
       event.stopPropagation(); // Mencegah "event" dari menyebar ke elemen lain
+      const userId = btn.getAttribute('data-user-id');
+      const postId = btn.getAttribute('data-post-id');
       if (confirm('Are you sure delete this?')) {
           // Hapus postingan atau lakukan tindakan lain sesuai kebutuhan
-          // ...
-
+          window.location.href = `posts/delete?id=${userId}&postId=${postId}`;
+    
           // Sembunyikan opsi Edit dan Hapus setelah tindakan selesai
           const card = event.target.closest('.card');
           const editOptions = card.querySelector('.card-edit');
           editOptions.style.display = 'none';
       }
-  }
+    });
+  });
+  
+  //Fungsi btn delete comment
+  const btnDelCom = document.querySelectorAll('.delete-button');
+  btnDelCom.forEach(function(btn) {
+    btn.addEventListener('click', function confirmDelete(event) {
+      event.stopPropagation(); // Mencegah "event" dari menyebar ke elemen lain
+      const userId = btn.getAttribute('data-user-id');
+      const postId = btn.getAttribute('data-comPost-id');
+      const comId = btn.getAttribute('data-comment-id');
+      if (confirm('Are you sure delete this?')) {
+          // Hapus postingan atau lakukan tindakan lain sesuai kebutuhan
+          window.location.href = `/comments/del-comment?id=${userId}&postId=${postId}&commentId=${comId}`;
+    
+          // Sembunyikan opsi Edit dan Hapus setelah tindakan selesai
+          const card = event.target.closest('.card');
+          const editOptions = card.querySelector('.card-edit');
+          editOptions.style.display = 'none';
+      }
+    });
+  });
 
   // Menambahkan event listener ke elemen dengan kelas "btn-edit"
   document.querySelectorAll('.btn-edit').forEach(btn => {
