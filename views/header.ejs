@@ -52,16 +52,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-light">
                   <!-- Dev instance switch users start -->
-                  <% users.forEach(user => { %>
-                  <li>
-                    <a
-                      class="dropdown-item"
-                      href="/posts?id=<%= user.id %>"
-                      onclick="updateSelectedUsername('<%= user.username %> ')"
-                      ><%= user.username %></a
-                    >
-                  </li>
-                  <% }); %>
+
                   <!-- Dev instance switch users end -->
                   <li class="nav-item">
                     <a href="/" class="dropdown-item">Log Out</a>
